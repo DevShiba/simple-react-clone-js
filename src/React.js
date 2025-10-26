@@ -86,6 +86,20 @@ export function useMemo(callback, dependencies) {
     return cache[id].value
   })()
 }
+export function useRef(initialValue) {
+  const id = globalId
+  const parent = globalParent
+  globalId++
+
+  return (() => {
+    const { cache } = componentState.get(parent)
+    if (cache[id] == null) {
+      cache[id] = { current: initialValue }
+    }
+
+    return cache[id]
+  })()
+}
 
 export function render(component, props, parent) {
   const state = componentState.get(parent) || { cache: [] }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "./React.js"
+import { useState, useEffect, useMemo, useRef } from "./React.js"
 
 export default function Component({ propCount, buttonElem }) {
   const [count, setCount] = useState(0)
