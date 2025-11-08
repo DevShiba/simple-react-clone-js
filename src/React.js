@@ -86,6 +86,7 @@ export function useMemo(callback, dependencies) {
     return cache[id].value
   })()
 }
+
 export function useRef(initialValue) {
   const id = globalId
   const parent = globalParent
