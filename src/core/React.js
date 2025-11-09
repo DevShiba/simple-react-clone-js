@@ -1,3 +1,5 @@
+import { diff } from './VirtualDom.js'
+
 let globalId = 0
 let globalParent
 const componentState = new Map()
@@ -112,5 +114,30 @@ export function render(component, props, parent) {
   const output = component(props)
   globalId = 0
 
-  parent.textContent = output
+  const oldVNode = state.vnode || null
+  const oldDom = state.domElement || null
+
+  if (output == null) {
+    if (state.cache) {
+      state.cache.forEach(hookState => {
+        if (hookState && hookState.cleanup) {
+          hookState.cleanup()
+        }
+      })
+    }
+  }
+
+  const newDom = diff(oldVNode, output, parent, oldDom)
+
+  if (output == null) {
+    componentState.delete(parent)
+  } else {
+    componentState.set(parent, {
+      ...state,
+      component,
+      props,
+      vnode: output,
+      domElement: newDom,
+    })
+  }
 }

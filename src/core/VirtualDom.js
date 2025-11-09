@@ -37,7 +37,7 @@ export function diff(oldVNode, newVNode, parentDOMElement, oldDom = null) {
   }
 
   if (newVNode.type === 'TEXT_NODE') {
-    if (oldVNode.tye === 'TEXT_NODE') {
+    if (oldVNode.type === 'TEXT_NODE') {
       if (oldVNode.text !== newVNode.text) {
         oldDom.nodeValue = newVNode.text
       }
